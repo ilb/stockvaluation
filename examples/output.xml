@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<active>True</active>
+	<fairPrice>1000.23</fairPrice>
+	<countDays>12</countDays>
+	<countDeals>59</countDeals>
+	<tradingVolume>4.68</tradingVolume>
+	<initialVolume>500000000</initialVolume>
+	<date>2019-03-29</date>
+	<marketDatas>
+		<marketData>
+			<countDeals>0</countDeals>
+			<tradingVolume>0</tradingVolume>
+			<weightedAverage>nan</weightedAverage>
+		</marketData>
+		<marketData>
+			<countDeals>15</countDeals>
+			<tradingVolume>5516100</tradingVolume>
+			<weightedAverage>100.019</weightedAverage>
+		</marketData>
+		<marketData>
+			<countDeals>5</countDeals>
+			<tradingVolume>1500000</tradingVolume>
+			<weightedAverage>100.017</weightedAverage>
+		</marketData>
+	</marketDatas>
+</root>

@@ -10,14 +10,17 @@ import tempfile
 import glob as gl
 import pandas as pd
 
+
 class FileBrowser():
     
-    GLOBAL_VOLUME_PATH = 'fairpricecalc/globalvolume/issuancevolume.xhtml'
+
+    GLOBAL_VOLUME_URL = os.environ['ru.ilb.stockvaluation.securitiesrefurl']
+    GLOBAL_VOLUME_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser() \
+                                                                    + '/volume.xhtml'
+
     BASE_FILE_NAME = '/moex_shares_'
     BASE_FILE_URL = 'https://mfd.ru/marketdata/endofday/5/'
-    BASE_FILE_PATH = tempfile.gettempdir() \
-                   + '/stockvaluation/' \
-                   + getpass.getuser()
+    BASE_FILE_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser()
     EMPTY_FILE = -1
 
 
@@ -30,6 +33,10 @@ class FileBrowser():
         Returns a list of files in a date range 
         and a global volume file
         '''
+        return self._get_volume_file(), self._get_exchange_files()
+    
+    def _get_exchange_files(self):
+        ''' Returns a list with files '''
         files_list = []
         for date in self.date_range:
 
@@ -40,20 +47,27 @@ class FileBrowser():
                 continue
             elif file != None: 
                 files_list.append(file)
-            else:
-                file = self._browse_internet( \
+                continue
+            file = self._browse_internet( \
                     url=self._create_internet_path(date), \
                     save_path=self._create_filesystem_path(date, \
                     with_ext=True))
+            if file == self.EMPTY_FILE:
+                open(self._create_filesystem_path().replace('csv', 'empty'), 'a').close()
+                continue
 
-                files_list.append(file)
-        volume_file = self._get_volume_file()
+        return files_list
 
-        return volume_file, files_list
-    
     def _get_volume_file(self):
         ''' Returns a global volume file'''
-        return self._browse_filesystem(self.GLOBAL_VOLUME_PATH)
+        file = self._browse_filesystem(self.GLOBAL_VOLUME_PATH)
+        if file == None:
+            file = self._browse_internet(self.GLOBAL_VOLUME_URL, self.GLOBAL_VOLUME_PATH)
+
+        if file == None:
+            raise NameError('Global volume file not found')
+
+        return file
         
     def _browse_filesystem(self, path):
         ''' Returns file searched in filesystem '''
@@ -82,8 +96,8 @@ class FileBrowser():
              if e.code != 404:
                  raise e
              else:
-                open(save_path.replace('csv', 'empty'), 'a').close()
-                return # file not found, return nothing
+                return self.EMPTY # file not found, return empty marker 
+
         except URLError as e:
              raise NameError('HTTP error: ' + e.code)
 

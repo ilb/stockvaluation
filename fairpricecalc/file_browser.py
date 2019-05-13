@@ -43,19 +43,23 @@ class FileBrowser():
             file = self._browse_filesystem(
                 path=self._create_filesystem_path(date))
 
-            if file == self.EMPTY_FILE:
+            if file == self.EMPTY_FILE: # if file is is empty, just skip
                 continue
-            elif file != None: 
+
+            if file != None: 
                 files_list.append(file)
                 continue
+
+            # if file doesn't exist in filesystem, browse internet
             file = self._browse_internet( \
                     url=self._create_internet_path(date), \
                     save_path=self._create_filesystem_path(date, \
                     with_ext=True))
             if file == self.EMPTY_FILE:
-                open(self._create_filesystem_path().replace('csv', 'empty'), 'a').close()
+                open(self._create_filesystem_path(date, with_ext=True).replace('csv', 'empty'), 'a').close()
                 continue
 
+            files_list.append(file)
         return files_list
 
     def _get_volume_file(self):
@@ -96,7 +100,7 @@ class FileBrowser():
              if e.code != 404:
                  raise e
              else:
-                return self.EMPTY # file not found, return empty marker 
+                return self.EMPTY_FILE # file not found, return empty marker 
 
         except URLError as e:
              raise NameError('HTTP error: ' + e.code)

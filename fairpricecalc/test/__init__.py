@@ -1,3 +1,3 @@
 import sys
 
-sys.path.append('stockvaluation/')
+sys.path.append('fairpricecalc/')

@@ -1,11 +1,11 @@
 import unittest
 import pandas as pd
-from stockvaluation.dataframe_parser import DataFrameParser
+from ..dataframe_parser import DataFrameParser
 
 class TestDataFrameParser(unittest.TestCase):
     
-    TEST_VOLUME_FILE = 'stockvaluation/globalvolume/issuancevolume.xhtml'
-    TEST_EXCHANGE_FILE = ['test/test.csv']
+    TEST_VOLUME_FILE = 'fairpricecalc/test/volume.xhtml'
+    TEST_EXCHANGE_FILE = ['fairpricecalc/test/test.csv']
     TEST_TICKER = 'ТойотаБ1P2'
     
     def test_parse_volume_file(self):

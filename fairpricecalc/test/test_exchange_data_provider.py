@@ -1,9 +1,8 @@
 import unittest
 
 
-from stockvaluation.dataframe_parser import DataFrameParser
-import stockvaluation.file_browser
-from stockvaluation.exchange_data_provider import ExchangeDataProvider
+from ..dataframe_parser import DataFrameParser
+from ..exchange_data_provider import ExchangeDataProvider
 
 
 class TestExchangeDataProvider(unittest.TestCase):

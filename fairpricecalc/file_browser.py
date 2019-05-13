@@ -9,15 +9,17 @@ import getpass
 import tempfile
 import glob as gl
 import pandas as pd
+import ssl
 
 
 class FileBrowser():
     
 
     GLOBAL_VOLUME_URL = os.environ['ru.ilb.stockvaluation.securitiesrefurl']
+    SSL_CLIENT_AUTH_FILE = os.environ['ILB_SSLCACERTIFICATEFILE']
+    SSL_CERT_FILE = os.environ['ru.bystrobank.apps.stockvaluation.certfile']
     GLOBAL_VOLUME_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser() \
                                                                     + '/volume.xhtml'
-
     BASE_FILE_NAME = '/moex_shares_'
     BASE_FILE_URL = 'https://mfd.ru/marketdata/endofday/5/'
     BASE_FILE_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser()
@@ -27,6 +29,7 @@ class FileBrowser():
     def __init__(self, date_str):
         date_utils = DateUtils()
         self.date_range = date_utils.date_range(date_str)
+        self.ssl_context = None
         
     def get_files(self):
         ''' 
@@ -90,6 +93,9 @@ class FileBrowser():
     def _browse_internet(self, url, save_path):
         ''' Returns file searched in internet '''
         
+        if self.ssl_context is None:
+            self._create_ssl_context()
+
         self._check_work_dir_exist()
         try:    
             response = urlretrieve(url, save_path)
@@ -140,3 +146,9 @@ class FileBrowser():
         return self.BASE_FILE_URL \
              + self.BASE_FILE_NAME \
              + date_iso.replace('-', '_') + '.csv'
+
+    def _create_ssl_context(self):
+        self.ssl_context = ssl.create_default_context(
+            ssl.Purpose.CLIENT_AUTH,
+            capath=self.SSL_CLIENT_AUTH_FILE)
+        self.ssl_context.load_cert_chain(certfile=self.SSL_CERT_FILE)

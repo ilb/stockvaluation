@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN" "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg-flat.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/oooxhtml/oooxhtml.css"/>
+    <style type="text/css">@page {margin-top:2cm;margin-bottom:2cm;margin-left:2cm;margin-right:2cm;}</style>
+    <title>Калькулятор справедливой цены</title>
+    <meta name="generator" content="oooxhtml/1.2"/>
+    <meta name="HeadURL" content="$HeadURL: https://svn.ilb.ru/repos/treasurydocs/trunk/doc/repo/fairpricecalc.xhtml $"/>
+  </head>
+  <body>
+    <div class="container text">
+      <h1 id="kal_kuljtor_spravedlivoj_cen_">
+        <a class="anchor" href="#kal_kuljtor_spravedlivoj_cen_">Калькулятор справедливой цены<span class="annotation"><span><span class="content">При описании сущности прежде всего нужно обозначить ее — дать ей имя. Далее мы должны описать характеристики и возможности сущности.</span><span class="creator" title="2019-04-19T07:29:39">&lt;анонимный&gt;</span></span></span></a>
+      </h1>
+      <p>Калькулятор справедливой стоимости ценных бумаг, находящихся в портфеле банка.</p>
+      <p>Для определения справедливой стоимости ценных бумаг, находящихся в портфеле банка необходимо по каждой бумаге определять является рынок активным или нет в соответствии определенными критериями (за последние 30 календарных дней):</p>
+      <p>1. Количество дней,в которые заключались сделки по бумаге не менее 5</p>
+      <p>2. Требование к минимальному суммарному объему заключенных сделок</p>
+      <p>3. Не менее 10 сделок.</p>
+      <p>Для определения/подсчета данных критериев нужно "обработать" информацию о итогах торгов за последние 30 дней. Исходные данные: <a href="https://mfd.ru/marketdata/endofday/5/moex_shares_2019_04_14.csv">Файл CSV</a> по итогам торгов за 1 день.</p>
+      <p>соответственно 30 календарных дней, это около 24-х файлов (с учетом выходных дней)</p>
+      <h2 id="svojstva">
+        <a class="anchor" href="#svojstva">Свойства<span class="annotation"><span><span class="content">В описании сущности следует приводить свойства, требуемые для выполнения действий. <b>Жирным шрифтом</b> перечисляются входные параметры.</span><span class="creator" title="2019-04-19T07:30:14">&lt;анонимный&gt;</span></span></span></a>
+      </h2>
+      <table summary="Таблица5" id="tablica5">
+        <colgroup>
+          <col style="min-width:42.46mm;"/>
+          <col style="min-width:50.34mm;"/>
+          <col style="min-width:77.21mm;"/>
+        </colgroup>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Поле</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Обозначение</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Описание поля</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-size:12pt;font-weight:bold;">Тикер</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;font-weight:bold;">ticker</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">
+              <a href="https://ru.wikipedia.org/wiki/Тикер">
+                <b>Тикер</b>
+              </a>
+              <b> ценной бумаги на </b>
+              <a href="https://mfd.ru/marketdata/?id=5&amp;group=17&amp;mode=3&amp;sortHeader=name&amp;sortOrder=1&amp;selectedDate">
+                <b>МосБирже</b>
+              </a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Минимальное количество дней</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">minDays</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">5</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Минимальное количество сделок</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">minDeals</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">10</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Минимальный объем торгов</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">minVolumeRate</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">0.1%</p>
+          </td>
+        </tr>
+      </table>
+      <h2 id="povedenie">
+        <a class="anchor" href="#povedenie">Поведение<span class="annotation"><span><span class="content">Имена действий означают процессы, которые могут происходить с сущностью, и отвечают на вопросы «что она может делать?» или «что с ней можно делать?»</span><span class="creator" title="2019-04-19T07:29:18">&lt;анонимный&gt;</span></span></span></a>
+      </h2>
+      <h3 id="rasscitat__cenu">
+        <a class="anchor" href="#rasscitat__cenu">Рассчитать цену</a>
+      </h3>
+      <h4 id="vhodn_e_dann_e">
+        <a class="anchor" href="#vhodn_e_dann_e">Входные данные</a>
+      </h4>
+      <table summary="Таблица2" id="tablica2">
+        <colgroup>
+          <col span="3" style="min-width:56.67mm;"/>
+        </colgroup>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Поле</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Обозначение</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Описание поля</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Дата</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">date</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Дата расчета цены</p>
+          </td>
+        </tr>
+      </table>
+      <h4 id="rascetn_e_dann_e">
+        <a class="anchor" href="#rascetn_e_dann_e">Расчетные данные</a>
+      </h4>
+      <table summary="Таблица3" id="tablica3">
+        <colgroup>
+          <col span="3" style="min-width:56.67mm;"/>
+        </colgroup>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Поле</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Обозначение</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Описание поля</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Количество дней, в которые заключались сделки</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">countDays</p>
+          </td>
+          <td>
+            <p>Из всех файлов по данной бумаге сосчитать количество дней (файлов), в которых значение "NumberOfTrades" больше 0</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Количество совершенных сделок</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">countDeals</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Из всех файлов по данной бумаге найти и суммировать количество сделок (столбец "NumberOfTrades")</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Суммарный объем торгов по ценной бумаге</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">tradingVolume</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Из всех файлов по данной бумаге найти и суммировать объем сделок (столбец "Amount")</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Объем выпуска</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">initialVolume</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">
+              <a href="data/issuancevolume.xlsx">Из файла</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <h4 id="v_hodn_e">
+        <a class="anchor" href="#v_hodn_e">Выходные данные</a>
+      </h4>
+      <table summary="Таблица4" id="tablica4">
+        <colgroup>
+          <col style="min-width:56.62mm;"/>
+          <col style="min-width:43.32mm;"/>
+          <col style="min-width:70.06mm;"/>
+        </colgroup>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Поле</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Обозначение</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Описание поля</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="font-size:12pt;">Активный рынок</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">active</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">Условия по И:</p>
+            <ol>
+              <li>
+                <p style="font-size:12pt;">countDays &gt;= minDays</p>
+              </li>
+              <li>
+                <p style="font-size:12pt;">countDeals &gt;= minDeals </p>
+              </li>
+              <li>
+                <p style="font-size:12pt;">tradingVolume/initialVolume*100 &gt;=minVolumeRate</p>
+              </li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Справедливая стоимость ценной бумаги</p>
+          </td>
+          <td>
+            <p style="font-size:12pt;">fairPrice</p>
+          </td>
+          <td/>
+        </tr>
+      </table>
+    </div>
+    <script type="text/javascript" src="/privilegedAPI/web/scripts/privilegedAPI.js"></script>
+    <script type="text/javascript" src="/oooxhtml/oooxhtml.js"></script>
+  </body>
+</html>

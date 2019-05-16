@@ -9,15 +9,17 @@ import getpass
 import tempfile
 import glob as gl
 import pandas as pd
+import ssl
 
 
 class FileBrowser():
     
 
     GLOBAL_VOLUME_URL = os.environ['ru.ilb.stockvaluation.securitiesrefurl']
+    SSL_CLIENT_AUTH_FILE = os.environ['ILB_SSLCACERTIFICATEFILE']
+    SSL_CERT_FILE = os.environ['ru.bystrobank.apps.stockvaluation.certfile']
     GLOBAL_VOLUME_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser() \
                                                                     + '/volume.xhtml'
-
     BASE_FILE_NAME = '/moex_shares_'
     BASE_FILE_URL = 'https://mfd.ru/marketdata/endofday/5/'
     BASE_FILE_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser()
@@ -27,6 +29,7 @@ class FileBrowser():
     def __init__(self, date_str):
         date_utils = DateUtils()
         self.date_range = date_utils.date_range(date_str)
+        self.ssl_context = None
         
     def get_files(self):
         ''' 
@@ -43,19 +46,23 @@ class FileBrowser():
             file = self._browse_filesystem(
                 path=self._create_filesystem_path(date))
 
-            if file == self.EMPTY_FILE:
+            if file == self.EMPTY_FILE: # if file is is empty, just skip
                 continue
-            elif file != None: 
+
+            if file != None: 
                 files_list.append(file)
                 continue
+
+            # if file doesn't exist in filesystem, browse internet
             file = self._browse_internet( \
                     url=self._create_internet_path(date), \
                     save_path=self._create_filesystem_path(date, \
                     with_ext=True))
             if file == self.EMPTY_FILE:
-                open(self._create_filesystem_path().replace('csv', 'empty'), 'a').close()
+                open(self._create_filesystem_path(date, with_ext=True).replace('csv', 'empty'), 'a').close()
                 continue
 
+            files_list.append(file)
         return files_list
 
     def _get_volume_file(self):
@@ -86,6 +93,9 @@ class FileBrowser():
     def _browse_internet(self, url, save_path):
         ''' Returns file searched in internet '''
         
+        if self.ssl_context is None:
+            self._create_ssl_context()
+
         self._check_work_dir_exist()
         try:    
             response = urlretrieve(url, save_path)
@@ -96,7 +106,7 @@ class FileBrowser():
              if e.code != 404:
                  raise e
              else:
-                return self.EMPTY # file not found, return empty marker 
+                return self.EMPTY_FILE # file not found, return empty marker 
 
         except URLError as e:
              raise NameError('HTTP error: ' + e.code)
@@ -136,3 +146,9 @@ class FileBrowser():
         return self.BASE_FILE_URL \
              + self.BASE_FILE_NAME \
              + date_iso.replace('-', '_') + '.csv'
+
+    def _create_ssl_context(self):
+        self.ssl_context = ssl.create_default_context(
+            ssl.Purpose.CLIENT_AUTH,
+            capath=self.SSL_CLIENT_AUTH_FILE)
+        self.ssl_context.load_cert_chain(certfile=self.SSL_CERT_FILE)

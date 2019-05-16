@@ -55,25 +55,25 @@
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=15]/table:table-cell[position()=4]">
+    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=15]/table:table-cell[position()=5]">
         <xsl:apply-templates select="." mode="replace">
             <xsl:with-param name="value" select="$data/fairPrice"/>
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=14]/table:table-cell[position()=4]">
+    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=14]/table:table-cell[position()=5]">
         <xsl:apply-templates select="." mode="replace">
             <xsl:with-param name="value" select="$data/tradingVolume"/>
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=13]/table:table-cell[position()=4]">
+    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=13]/table:table-cell[position()=5]">
         <xsl:apply-templates select="." mode="replace">
             <xsl:with-param name="value" select="$data/countDeals"/>
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=12]/table:table-cell[position()=4]">
+    <xsl:template match="table:table[@table:name='1 уровень']/table:table-row[position()=12]/table:table-cell[position()=5]">
         <xsl:apply-templates select="." mode="replace">
             <xsl:with-param name="value" select="$data/countDays"/>
         </xsl:apply-templates>
@@ -85,15 +85,15 @@
         </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='Данные (автомат)']/table:table-row[position() >= 3 and not(position() > 32)]">
+    <xsl:template match="table:table[@table:name='Данные']/table:table-row[position() >= 4 and not(position() > 33)]">
         <xsl:copy>
             <xsl:apply-templates select="*">
-                <xsl:with-param name="row" select="position()-10"/>
+                <xsl:with-param name="row" select="position()-17"/>
             </xsl:apply-templates>
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='Данные (автомат)']/table:table-row[position() >= 3 and not(position() > 32)]/table:table-cell[position()=2]">
+    <xsl:template match="table:table[@table:name='Данные']/table:table-row[position() >= 4 and not(position() > 33)]/table:table-cell[position()=3]">
         <xsl:param name="row"/>
             <xsl:apply-templates select="." mode="replace">
                 <xsl:with-param name="value" select="$data/marketDatas/marketData[position()=$row]/countDeals"/> 
@@ -101,7 +101,7 @@
             </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='Данные (автомат)']/table:table-row[position() >= 3 and not(position() > 32)]/table:table-cell[position()=3]">
+    <xsl:template match="table:table[@table:name='Данные']/table:table-row[position() >= 4 and not(position() > 33)]/table:table-cell[position()=4]">
         <xsl:param name="row"/>
             <xsl:apply-templates select="." mode="replace">
                 <xsl:with-param name="value" select="$data/marketDatas/marketData[position()=$row]/tradingVolume"/> 
@@ -109,7 +109,7 @@
             </xsl:apply-templates>
     </xsl:template>
 
-    <xsl:template match="table:table[@table:name='Данные (автомат)']/table:table-row[position() >= 3 and not(position() > 32)]/table:table-cell[position()=4]">
+    <xsl:template match="table:table[@table:name='Данные']/table:table-row[position() >= 4 and not(position() > 33)]/table:table-cell[position()=5]">
         <xsl:param name="row"/>
             <xsl:apply-templates select="." mode="replace">
                 <xsl:with-param name="value" select="$data/marketDatas/marketData[position()=$row]/weightedAverage"/> 

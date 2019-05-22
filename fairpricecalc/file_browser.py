@@ -87,10 +87,13 @@ class FileBrowser():
             return None # return that file not found in filesystem
         filename=files[0]
         file_is_empty = filename.find('empty') > 0
-        if file_is_empty and time.time()-os.path.getmtime(filename) < self.EMPTY_FILE_TTL:
-            #print('skip update=',filename,time.time()-os.path.getmtime(filename))
-            return self.EMPTY_FILE # return an empty file marker
-
+        if file_is_empty:
+            if time.time()-os.path.getmtime(filename) < self.EMPTY_FILE_TTL:
+                #print('skip update=',filename,time.time()-os.path.getmtime(filename))
+                return self.EMPTY_FILE # return an empty file marker
+            else:
+                os.remove(filename)
+                return None # return that file not found in filesystem
         else:
             return filename # return a valid path
         

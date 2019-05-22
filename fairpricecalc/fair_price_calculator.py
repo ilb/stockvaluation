@@ -64,6 +64,6 @@ class FairPriceCalculator():
         return count_deals, trading_volume, count_days, weighted_average
 
     def _check_is_active(self, days, deals, rate):
-        return days > self.MIN_DAYS \
-                and deals > self.MIN_TRADES \
-                and rate > self.MIN_VOLUME_RATE
+        return days >= self.MIN_DAYS \
+                and deals >= self.MIN_TRADES \
+                and rate >= self.MIN_VOLUME_RATE

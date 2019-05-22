@@ -16,8 +16,8 @@ class FileBrowser():
     
 
     GLOBAL_VOLUME_URL = os.environ['ru.ilb.stockvaluation.securitiesrefurl']
-    SSL_CLIENT_AUTH_FILE = os.environ['ILB_SSLCACERTIFICATEFILE']
-    SSL_CERT_FILE = os.environ['ru.bystrobank.apps.stockvaluation.certfile']
+    SSL_CLIENT_AUTH_FILE = os.environ.get('ILB_SSLCACERTIFICATEFILE')
+    SSL_CERT_FILE = os.environ.get('ru.bystrobank.apps.stockvaluation.certfile')
     GLOBAL_VOLUME_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser() \
                                                                     + '/volume.xhtml'
     BASE_FILE_NAME = '/moex_shares_'
@@ -67,9 +67,9 @@ class FileBrowser():
 
     def _get_volume_file(self):
         ''' Returns a global volume file'''
-        file = self._browse_filesystem(self.GLOBAL_VOLUME_PATH)
-        if file == None:
-            file = self._browse_internet(self.GLOBAL_VOLUME_URL, self.GLOBAL_VOLUME_PATH)
+        #file = self._browse_filesystem(self.GLOBAL_VOLUME_PATH)
+        #if file == None:
+        file = self._browse_internet(self.GLOBAL_VOLUME_URL, self.GLOBAL_VOLUME_PATH)
 
         if file == None:
             raise NameError('Global volume file not found')
@@ -93,8 +93,8 @@ class FileBrowser():
     def _browse_internet(self, url, save_path):
         ''' Returns file searched in internet '''
         
-        if self.ssl_context is None:
-            self._create_ssl_context()
+#        if self.ssl_context is None:
+#            self._create_ssl_context()
 
         self._check_work_dir_exist()
         try:    

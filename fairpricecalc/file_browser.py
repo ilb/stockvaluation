@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import time
 from urllib.request import urlretrieve
 from urllib.error import HTTPError, URLError
 from os import path
@@ -24,6 +25,7 @@ class FileBrowser():
     BASE_FILE_URL = 'https://mfd.ru/marketdata/endofday/5/'
     BASE_FILE_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser()
     EMPTY_FILE = -1
+    EMPTY_FILE_TTL = 3600 # one hour
 
 
     def __init__(self, date_str):
@@ -80,15 +82,17 @@ class FileBrowser():
         ''' Returns file searched in filesystem '''
 
         # Glob returns string path in list
-        if gl.glob(path) == []:
+        files=gl.glob(path)
+        if files == []:
             return None # return that file not found in filesystem
-
-        file_is_empty = gl.glob(path)[0].find('empty') > 0
-        if file_is_empty:
+        filename=files[0]
+        file_is_empty = filename.find('empty') > 0
+        if file_is_empty and time.time()-os.path.getmtime(filename) < self.EMPTY_FILE_TTL:
+            #print('skip update=',filename,time.time()-os.path.getmtime(filename))
             return self.EMPTY_FILE # return an empty file marker
 
         else:
-            return gl.glob(path)[0] # return a valid path
+            return filename # return a valid path
         
     def _browse_internet(self, url, save_path):
         ''' Returns file searched in internet '''

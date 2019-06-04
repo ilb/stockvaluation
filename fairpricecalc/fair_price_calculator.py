@@ -39,7 +39,7 @@ class FairPriceCalculator():
                 'countDays': count_days, 'countDeals': count_deals, 
                 'tradingVolume': volume_rate, 'initialVolume': initial_volume, 
                 'date': date_utils.get_end_date(date),
-                'marketDatas':market_data}
+                'marketData':market_data}
 
     def _get_merged_values(self, market_data):
         ''' Gets list with market data of each trading day

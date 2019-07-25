@@ -3,17 +3,17 @@ from exchange_data_provider import ExchangeDataProvider
 from date_utils import DateUtils
 
 class FairPriceCalculator():
-    
+
     MIN_DAYS = 5
     MIN_TRADES = 10
     MIN_VOLUME_RATE = 0.1
-    
+
     def __init__(self, ticker):
         self.ticker = ticker
-        
+
     def calculate(self, date):
-        ''' 
-        Returns list with calculated data about ticker in 
+        '''
+        Returns list with calculated data about ticker in
         curtain date: is active, deals, volume rate, is active, fair price.
         '''
         provider = ExchangeDataProvider(date, self.ticker)
@@ -23,21 +23,21 @@ class FairPriceCalculator():
         count_deals, trading_volume, count_days, weighted_average \
                             = self._get_merged_values(market_data)
 
-        volume_rate = round(trading_volume / initial_volume * 100, 2) 
-        
-        # If ticker is active, fair price equals: 
+        volume_rate = round(trading_volume / initial_volume * 100, 2)
+
+        # If ticker is active, fair price equals:
         # weighted average (of last trading day) * 10
         # else equals 0
-        is_active = self._check_is_active(count_days, count_deals, count_days)
+        is_active = self._check_is_active(count_days, count_deals, volume_rate)
         if is_active:
             last_average_index = len(market_data) - 1
             fair_price = weighted_average * 10
-        else: 
+        else:
             fair_price = 0
-                
-        return {'active': is_active, 'fairPrice': round(fair_price, 2), 
-                'countDays': count_days, 'countDeals': count_deals, 
-                'tradingVolume': volume_rate, 'initialVolume': initial_volume, 
+
+        return {'active': is_active, 'fairPrice': round(fair_price, 2),
+                'countDays': count_days, 'countDeals': count_deals,
+                'tradingVolume': volume_rate, 'initialVolume': initial_volume,
                 'date': date_utils.get_end_date(date),
                 'marketData':market_data}
 
@@ -58,7 +58,7 @@ class FairPriceCalculator():
                 count_days += 1
             if not math.isnan(data['weightedAverage']):
                 weighted_average = data['weightedAverage']
-            else: 
+            else:
                 data['weightedAverage'] = 0
 
         return count_deals, trading_volume, count_days, weighted_average

@@ -28,12 +28,11 @@ class TestProcessInstances(unittest.TestCase):
     def setUpWorkflow(self):
         configuration = WorkflowConfiguration()
         configuration.host=self.workflowUrl
-        #configuration.username =  os.environ.get('USER')
-        #configuration.password = "123"
+        configuration.username =  os.environ.get('USER')
+        configuration.password = "123"
         configuration.debug=True
-        #auth_header='Basic ' + base64.b64encode(bytes(configuration.username+':'+configuration.password, 'utf-8')).decode("utf-8")
-        #self.process_api = ProcessInstancesApi(WorkflowApiClient(configuration=configuration,header_name="Authorization",header_value=auth_header))
-        self.process_api = ProcessInstancesApi(WorkflowApiClient(configuration=configuration))
+        auth_header='Basic ' + base64.b64encode(bytes(configuration.username+':'+configuration.password, 'utf-8')).decode("utf-8")
+        self.process_api = ProcessInstancesApi(WorkflowApiClient(configuration=configuration,header_name="Authorization",header_value=auth_header))
     def setUpFiledossier(self):
         configuration = FiledossierConfiguration()
         configuration.host=self.workflowUrl

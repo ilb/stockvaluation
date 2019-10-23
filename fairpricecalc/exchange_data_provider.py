@@ -12,15 +12,15 @@ class ExchangeDataProvider():
     def __init__(self, date, ticker):
         self.ticker = ticker
         self.date = date
-    
+
     def get_exchange_data(self):
-        ''' 
+        '''
         Returns initial volume and market data of certain ticker and date
         '''
         browser = FileBrowser(self.date)
         parser = DataFrameParser(self.ticker)
         volume_file, exchange_files = browser.get_files()
-        
+
         volume_df = parser.parse_volume_file(volume_file)
         exchange_df = parser.parse_exchange_files(exchange_files)
 
@@ -34,15 +34,19 @@ class ExchangeDataProvider():
 
         initial_volume = self._get_initial_volume(volume_df)
 
-        return initial_volume, market_data 
-        
+        return initial_volume, market_data
+
     def _get_initial_volume(self, df):
-        ''' 
-        Process a dataframe and returns a initial 
+        '''
+        Process a dataframe and returns a initial
         volume of the certain paper
         '''
         df = df.loc[df[0] == self.ticker]
-        return int(df[1])
+
+        if isinstance(df[1], pd.Series):
+            return int(df[1].values[0])
+        else:
+            return int(df[1])
 
     def _check_dtype_float(self, value):
         if isinstance(value, float):

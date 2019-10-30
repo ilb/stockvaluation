@@ -12,6 +12,8 @@
             <code>fairpricecalc</code>
             <name>Распоряжение</name>
             <readonly>true</readonly>
+            <required>true</required>
+            <hidden>false</hidden>
             <variation>
               <mediaType>application/json</mediaType>
               <representation>

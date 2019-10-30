@@ -12,13 +12,22 @@
             <code>fairpricecalc</code>
             <name>Распоряжение</name>
             <readonly>true</readonly>
-            <mediaType>application/json</mediaType>
-            <representation>
+            <variation>
+              <mediaType>application/json</mediaType>
+              <representation>
                 <mediaType>application/vnd.oasis.opendocument.spreadsheet</mediaType>
                 <stylesheet>representations/fairpriceorder/content.xsl</stylesheet>
                 <template>representations/fairpriceorder/template.ods</template>
-            </representation>
+              </representation>
+            </variation>
+            <variation>
+              <mediaType>application/xml</mediaType>
+              <representation>
+                <mediaType>application/vnd.oasis.opendocument.spreadsheet</mediaType>
+                <stylesheet>representations/fairpriceorder/content.xsl</stylesheet>
+                <template>representations/fairpriceorder/template.ods</template>
+              </representation>
+            </variation>
         </dossierFile>
-
     </dossier>
 </package>

@@ -14,7 +14,7 @@
             <readonly>true</readonly>
             <required>true</required>
             <hidden>false</hidden>
-            <allowMultiple>false</allowMultiple>
+            <allowedMultiple>false</allowedMultiple>
             <variation>
               <mediaType>application/json</mediaType>
               <representation>

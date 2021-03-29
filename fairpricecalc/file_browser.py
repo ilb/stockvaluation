@@ -25,10 +25,12 @@ class FileBrowser():
     EMPTY_FILE = -1
     EMPTY_FILE_TTL = 3600 # one hour
 
+    DAYS_DELTA = -45
+
 
     def __init__(self, date_str):
         date_utils = DateUtils()
-        self.date_range = date_utils.date_range(date_str)
+        self.date_range = date_utils.date_range(date_str, self.DAYS_DELTA)
         
     def get_files(self):
         ''' 

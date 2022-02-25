@@ -51,6 +51,8 @@ class ExchangeDataProvider():
     def _check_dtype_float(self, value):
         if isinstance(value, float):
             return value
+        elif isinstance(value, int):
+            return float(value)
         else:
             return float(value.replace(',','.'))
 

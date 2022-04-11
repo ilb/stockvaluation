@@ -21,8 +21,8 @@ class FileBrowser():
                                                                     + '/volume.xhtml'
     BASE_FILE_NAME = '/moex_shares_'
     BASE_FILE_URL = 'https://mfd.ru/marketdata/endofday/5/'
-    #BASE_FILE_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser()
-    BASE_FILE_PATH = '/var/apps/stockvaluation'
+    BASE_FILE_PATH = tempfile.gettempdir() + '/stockvaluation/' + getpass.getuser()
+    #BASE_FILE_PATH = '/var/apps/stockvaluation'
     EMPTY_FILE = -1
     EMPTY_FILE_TTL = 3600 # one hour
 

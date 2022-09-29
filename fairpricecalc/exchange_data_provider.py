@@ -33,8 +33,9 @@ class ExchangeDataProvider():
                 })
 
         initial_volume = self._get_initial_volume(volume_df)
+        isin = self._get_isin(volume_df)
 
-        return initial_volume, market_data
+        return initial_volume, isin, market_data
 
     def _get_initial_volume(self, df):
         '''
@@ -47,6 +48,18 @@ class ExchangeDataProvider():
             return int(df[1].values[0])
         else:
             return int(df[1])
+
+    def _get_isin(self, df):
+        '''
+        Process a dataframe and returns a
+        isin of the certain paper
+        '''
+        df = df.loc[df[0] == self.ticker]
+
+        if isinstance(df[2], pd.Series):
+            return str(df[2].values[0])
+        else:
+            return str(df[2])
 
     def _check_dtype_float(self, value):
         if isinstance(value, float):

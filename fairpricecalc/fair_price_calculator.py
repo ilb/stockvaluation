@@ -19,7 +19,7 @@ class FairPriceCalculator():
         provider = ExchangeDataProvider(date, self.ticker)
         date_utils = DateUtils()
 
-        initial_volume, market_data = provider.get_exchange_data()
+        initial_volume, isin, market_data = provider.get_exchange_data()
         count_deals, trading_volume, count_days, weighted_average \
                             = self._get_merged_values(market_data)
 
@@ -38,6 +38,7 @@ class FairPriceCalculator():
         return {'active': is_active, 'fairPrice': round(fair_price, 2),
                 'countDays': count_days, 'countDeals': count_deals,
                 'tradingVolume': volume_rate, 'initialVolume': initial_volume,
+                'isin': isin,
                 'date': date_utils.get_end_date(date),
                 'marketData':market_data}
 

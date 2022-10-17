@@ -14,4 +14,4 @@ def create_ssl_context():
         ssl_context.load_cert_chain(certfile=SSL_CERT_FILE)
     return ssl_context
 
-ssl._create_default_https_context = create_ssl_context
+# ssl._create_default_https_context = create_ssl_context

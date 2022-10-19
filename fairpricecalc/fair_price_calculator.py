@@ -1,6 +1,7 @@
 import math
 from exchange_data_provider import ExchangeDataProvider
 from date_utils import DateUtils
+from exchange_period import ExchangePeriod
 
 class FairPriceCalculator():
 
@@ -27,15 +28,19 @@ class FairPriceCalculator():
 
         # If ticker is active, fair price equals:
         # weighted average (of last trading day) * 10
+        # else if ticker is low_active, equals:
+        # weighted average * 0.99
         # else equals 0
-        is_active = self._check_is_active(count_days, count_deals, volume_rate)
-        if is_active:
+        active = ExchangePeriod(initial_volume, count_deals, trading_volume, count_days).get_activity()
+        if active == 'ACTIVE':
             last_average_index = len(market_data) - 1
             fair_price = weighted_average * 10
+        elif active == 'LOW_ACTIVE':
+            fair_price = weighted_average * 0.99
         else:
             fair_price = 0
 
-        return {'active': is_active, 'fairPrice': round(fair_price, 2),
+        return {'active': active, 'fairPrice': round(fair_price, 2),
                 'countDays': count_days, 'countDeals': count_deals,
                 'tradingVolume': volume_rate, 'initialVolume': initial_volume,
                 'isin': isin,
@@ -63,8 +68,3 @@ class FairPriceCalculator():
                 data['weightedAverage'] = 0
 
         return count_deals, trading_volume, count_days, weighted_average
-
-    def _check_is_active(self, days, deals, rate):
-        return days >= self.MIN_DAYS \
-                and deals >= self.MIN_TRADES \
-                and rate >= self.MIN_VOLUME_RATE

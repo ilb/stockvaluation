@@ -29,14 +29,14 @@ class FairPriceCalculator():
         # If ticker is active, fair price equals:
         # weighted average (of last trading day) * 10
         # else if ticker is low_active, equals:
-        # weighted average * 0.99
+        # weighted average * 10 * 0.99
         # else equals 0
         active = ExchangePeriod(initial_volume, count_deals, trading_volume, count_days).get_activity()
         if active == 'ACTIVE':
             last_average_index = len(market_data) - 1
             fair_price = weighted_average * 10
         elif active == 'LOW_ACTIVE':
-            fair_price = weighted_average * 0.99
+            fair_price = weighted_average * 9.9
         else:
             fair_price = 0
 

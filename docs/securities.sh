@@ -1,0 +1,1 @@
+curl -o securities.xhtml --cert ~/.certs/my.pem https://docs.ilb.ru/doc/treasurydocs/repo/data/issuancevolume.xhtml

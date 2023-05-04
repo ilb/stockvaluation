@@ -13,5 +13,5 @@ def create_ssl_context():
     if SSL_CERT_FILE!=None:
         ssl_context.load_cert_chain(certfile=SSL_CERT_FILE)
     return ssl_context
-
-ssl._create_default_https_context = create_ssl_context
+# temp fix urllib.error.URLError: <urlopen error Cannot create a client socket with a PROTOCOL_TLS_SERVER context
+#ssl._create_default_https_context = create_ssl_context

@@ -1,1 +1,1 @@
- env ru.ilb.stockvaluation.securitiesrefurl=https://raw.githubusercontent.com/SPoket/hackathon/master/quests/stockvaluation/stockvaluation/globalvolume/issuancevolume.xhtml python -m unittest discover
+env ru.bystrobank.apps.stockvaluation.securitiesrefurl=https://ilb.github.io/stockvaluation/securities.xhtml python -m unittest discover

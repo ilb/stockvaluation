@@ -1,4 +1,4 @@
-/fairpricecalc/.env/
-/fairpricecalc/__pycache__/
-/fairpricecalc/dist/
-/fairpricecalc/fairpricecalc.egg-info/
+/.env/
+/__pycache__/
+/dist/
+/.egg-info/

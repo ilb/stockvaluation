@@ -4,6 +4,7 @@ FROM node:16.20-alpine AS runner
 RUN apk add py3-setuptools py3-pandas py3-lxml py3-dicttoxml
 WORKDIR /app
 COPY . .
-RUN python setup.py install
+RUN cd fairpricecalc && python setup.py install
+ENV ru.bystrobank.apps.stockvaluation.securitiesrefurl=https://ilb.github.io/stockvaluation/securities.xhtml
 
-CMD /bin/sh
+CMD python fairpricecalc

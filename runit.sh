@@ -1,5 +1,2 @@
-cat examples/input.json | docker run \
-  -i \
-  --rm \
-  stockvaluation $*
+docker run  -it --rm stockvaluation $*
 

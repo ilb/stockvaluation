@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 app_dependencies = [
 #    "pandas==1.5.3",
 #    "lxml==4.9.2",
-    "dicttoxml==1.7.16",
+#    "dicttoxml==1.7.16",
 ]
 
 setup(

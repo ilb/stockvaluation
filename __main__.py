@@ -6,7 +6,9 @@ import sys
 import json
 import dicttoxml
 import argparse
-
+# https://github.com/quandyfactory/dicttoxml/issues/91
+import collections
+collections.Iterable = collections.abc.Iterable
 
 def main():
     ''' Entry point of 'stockvaluation' program.
